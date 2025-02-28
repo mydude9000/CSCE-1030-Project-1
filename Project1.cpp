@@ -32,4 +32,24 @@ int main () {
         if (!valid) {
             cout << "Please enter a valid name please. Enter again.\n";
         }
-    } while (!valid);
+    } 
+    while (!valid);
+    // Welcome message for user and what to expect
+    cout << "Welcome " << name << ".\n";
+    cout << "Two random numbers have been generated for you." << endl;
+    
+    // Score will be set to 100 and started random seed 
+    int score = 100;
+    srand(time(0));
+
+    // Generating two random numbers
+    int rand1, rand2;
+    do {
+        rand1 = rand() % 100;
+        rand2 = rand() % 100;
+    }
+    while (rand1 >= rand2);
+
+    
+    return 0; 
+}
