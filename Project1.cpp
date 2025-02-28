@@ -1,11 +1,11 @@
 // Students working on this Project: Jesus Ramirez and Alejandro Saenz
 
 
-#include <iostream> //standard library need 
-#include <string> //used to delcare string variables and manipulate strings in our program 
-#include <cstdlib> //for srand() and rand() functions to generate random numbers 
-#include <ctime> //for the time(0) function 
-#include <cctype> //for checking if inputs are vaild using functions such as isdigit() or isalpha()
+#include <iostream> 
+#include <string> 
+#include <cstdlib> 
+#include <ctime>  
+#include <cctype> 
 using namespace std; 
 
 int main () {
