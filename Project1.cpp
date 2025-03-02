@@ -51,22 +51,10 @@ int main () {
     while (rand1 >= rand2);
 
     // FIXME: Need to make sure first and last initials are capitalized 
-
-    // Welcome message for user and what to expect 
-    cout << "Welcome " << name << ".\n";
-    cout << "Two random numbers have been generated for you." << endl;
     
-    // Score will be set to 100 and started random seed 
-    int score = 100;
-    srand(time(0));
-
-    // Generating two random numbers inclusively from 100 to 150
-    int rand1, rand2;
-    do {
-        rand1 = (rand() % 51) + 100;
-        rand2 = (rand() % 51) + 100;
-    }
-    while (rand1 >= rand2);
+    // Setting Display or Exit values as false
+    bool displayOpt = false;
+    bool exitOpt = false;
 
     // Establishing an enumeration for given choices of add, subtract, display, giveup, and exit
     int userChoice;
@@ -85,12 +73,30 @@ int main () {
         int realSum = rand1 + rand2;
         if (abs(guess - realSum) < 5) {    // Creating if statement to accept guesses that are less than 5 from realSum
             score += 5;
-            cout << "";
+            cout << "Congrats. Your guess is close enough. You Win! Your updated score is: " << score << endl;
+            cout << "Would you like to restart the game? Y/N: ";  
+            char restart; // Restart option if user would like to play again
+            cin >> restart; 
+            restart = toupper(restart); 
+            if (restart == 'Y') {
+                do {
+                    rand1 = (rand() % 51) + 100;
+                    rand2 = (rand() % 51) + 100;
+                }
+                while (rand1 >= rand2);
+                displayOpt = false;
+            }
+            else {
+                score -= 1;
+                cout << "Wrong guess\nYour updated score is now: " << score << endl;
+            }
+            break;
         }
-
+        case 2: 
+        
 
 
     }
-    
+
     return 0; 
 }
