@@ -1,43 +1,42 @@
-// Students working on this Project: Jesus Ramirez and Alejandro Saenz
+#include <iostream>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+#include <cctype>
+using namespace std;
 
+int main() {
+    // Displaying heading
+    cout << "+--------------------------------------------------------------+\n";
+    cout << "|  Computer Science and Engineering                            |\n";
+    cout << "|  CSCE 1030 - Computer Science I                              |\n";
+    cout << "|  Jesus Ramirez jor0038 jesusramirez11@my.unt.edu             |\n";
+    cout << "|  Edgar Saenz Wong eas0446 AlejandroSaenzWong@my.unt.edu      |\n";
+    cout << "+--------------------------------------------------------------+\n";
 
-#include <iostream> 
-#include <string> 
-#include <cstdlib> 
-#include <ctime>  
-#include <cctype> 
-using namespace std; 
-
-int main () {
-    // Need to display heading 
-    cout << "+------------------------------------------------------+\n";
-    cout << "|  Computer Science and Engineering                    |\n";
-    cout << "|  CSCE 1030 - Computer Science I                      |\n";
-    cout << "|  Jesus Ramirez jor0038 jesusramirez11@my.unt.edu     |\n";
-    cout << "|  Alejandro Saenz EUID your@unt.edu email             |\n";   //FIXME add your unt creds pls 
-    cout << "+------------------------------------------------------+\n";
-
-    //Now need to ask user for their name, so need to declare variable 
+    // Declare variable for user name
     string name;
     bool valid;
+
     do {
         cout << "Please enter your name: ";
         getline(cin, name);
-        valid = true; 
-        for (char c : name) {
-            if (!isalpha(c) && !isspace(c)) {
-                valid = false;
-                break;
-            } 
-        }
-        if (!valid) {
-            cout << "Please enter a valid name. Enter again.\n";
-        }
-    } 
-    while (!valid);
+        valid = true;
 
-    // Need to make sure first and last initials are capitalized. This I had to look up, but it doesn't seem to be working
-    // We can leave out if need be just to make it less suspicious
+        // Check if name contains only letters and spaces
+        for (int i = 0; i < name.length(); ++i) {
+        if (!isalpha(name[i]) && !isspace(name[i])) {
+        valid = false;
+        break;
+    }
+}
+
+        if (!valid) {
+            cout << "Please enter a valid name (only letters and spaces). Enter again.\n";
+        }
+    } while (!valid);
+
+    // Capitalize first and last initials of the name
     bool makeUpper = true;
     for (int i = 0; i < name.length(); ++i) {
         if (makeUpper && isalpha(name[i])) {
@@ -50,110 +49,116 @@ int main () {
         else {
             name[i] = tolower(name[i]);
         }
-    }  
+    }
 
-    // Welcome message for user and what to expect 
+    // Welcome message
     cout << "Welcome " << name << ".\n";
     cout << "Two random numbers have been generated for you." << endl;
-    
-    // Score will be set to 100 and started random seed 
+
+    // Set initial score and random seed
     int score = 100;
     srand(time(0));
 
-    // Generating two random numbers inclusively from 100 to 150
+    // Generate two random numbers between 100 and 150
     int rand1, rand2;
     do {
         rand1 = (rand() % 51) + 100;
         rand2 = (rand() % 51) + 100;
-    }
-    while (rand1 >= rand2);
+    } while (rand1 >= rand2);
 
-    // Setting Display or Exit values as false
+    // Game loop variables
     bool displayOpt = false;
     bool exitOpt = false;
-
-    // Establishing an enumeration for given choices of add, subtract, display, giveup, and exit
-    int userChoice;
-
     enum choice {ADD = 1, SUBTRACT = 2, DISPLAY = 3, GIVEUP = 4, EXIT = 5};
 
-    cout << "\n1. ADD\n2. SUBTRACT\n3. DISPLAY\n4. GIVEUP\n5. EXIT\n";
-    cout << "Enter your perferred choice: ";
-    cin >> userChoice; 
+    // Game loop
+    while (score > 0 && !exitOpt) {
+        cout << "\n1. ADD\n2. SUBTRACT\n3. DISPLAY\n4. GIVEUP\n5. EXIT\n";
+        cout << "Enter your preferred choice: ";
+        int userChoice;
+        cin >> userChoice;
 
-    switch (userChoice) {
-        case 1: {       //ADD
-            int guess; 
-            cout << "Please enter your guess of the sum of random numbers: ";
-            cin >> guess;
-            int realSum = rand1 + rand2;
-            if (abs(guess - realSum) < 5) {    // Creating if-else statement to accept guesses that are less/more than 5 from realSum or wrong guess 
-                score += 5;
-                cout << "Congrats. Your guess is close enough. You Win! Your updated score is: " << score << endl;
-                cout << "Would you like to restart the game? Y/N: ";  
-                char restart;                  // Restart option if user would like to play again
-                cin >> restart; 
-                restart = toupper(restart); 
-                if (restart == 'Y') {
-                    do {
-                        rand1 = (rand() % 51) + 100;
-                        rand2 = (rand() % 51) + 100;
-                    }
-                    while (rand1 >= rand2);
-                    displayOpt = false;
-                }
-                else {
+        switch (userChoice) {
+            case ADD: { // ADD
+                int guess;
+                cout << "Please enter your guess of the sum of random numbers: ";
+                cin >> guess;
+                int realSum = rand1 + rand2;
+                if (abs(guess - realSum) < 5) {
+                    score += 5;
+                    cout << "Congrats. Your guess is close enough. You Win! Your updated score is: " << score << endl;
+                } else {
                     score -= 1;
-                    cout << "Wrong guess\nYour updated score is now: " << score << endl;
+                    cout << "Wrong guess. Your updated score is now: " << score << endl;
                 }
                 break;
             }
-        }
-        case 2: {    //SUBTRACT                            // FIXME Having issue with complier. Says I jumped cases and is not running correctly. Maybe you can look at it, Edgar 
-            int guess;
-            cout << "Please enter your guess of the difference of random numbers: ";
-            cin >> guess; 
-            int realDiff = rand2 - rand1;
-            if (abs(guess - realDiff) < 5) {    // Basically the same format as Case 1
-                score += 5;
-                cout << "Congrats. Your guess is close enough. You Win! Your updated score is: " << score << endl;
-                cout << "Would you like to restart the game? Y/N: ";
-                char restart;                   
-                cin >> restart; 
-                restart = toupper(restart); 
-                if (restart == 'Y') {
-                    do {
-                        rand1 = (rand() % 51) + 100;
-                        rand2 = (rand() % 51) + 100;
-                    }
-                    while (rand1 >= rand2);
-                    displayOpt = false;
-                }
-                else {
+
+            case SUBTRACT: { // SUBTRACT
+                int guess;
+                cout << "Please enter your guess of the difference of random numbers: ";
+                cin >> guess;
+                int realDiff = rand2 - rand1;
+                if (abs(guess - realDiff) < 5) {
+                    score += 5;
+                    cout << "Congrats. Your guess is close enough. You Win! Your updated score is: " << score << endl;
+                } else {
                     score -= 1;
-                    cout << "Wrong guess\nYour updated score is now: " << score << endl;
+                    cout << "Wrong guess. Your updated score is now: " << score << endl;
                 }
                 break;
             }
+
+            case DISPLAY: { // DISPLAY
+                if (!displayOpt) {
+                    score -= 3;
+                    displayOpt = true;
+                    cout << "Your updated score is: " << score << endl;
+                    cout << "The first random number is " << rand1 << endl;
+                } else {
+                    cout << "You have already displayed the first random number.\n";
+                }
+                break;
+            }
+
+            case GIVEUP: { // GIVEUP
+                score -= 10;
+                cout << "You have given up. Your updated score is: " << score << endl;
+                break;
+            }
+
+            case EXIT: { // EXIT
+                exitOpt = true;
+                break;
+            }
+
+            default: {
+                cout << "Invalid choice. Please enter a valid choice.\n";
+                break;
+            }
         }
-        case 3: {   //DISPLAY
-            if(!displayOpt) {
-                score -= 3;
-                displayOpt = true;
-                cout << "Your updated score is: " << score << endl;
-                cout << "The first random number is " << rand1 << endl;
-            }
-            else {
-                cout << "You have already displayed the first random number.\n";
-            }
+
+        // Check if score reached 0
+        if (score <= 0) {
+            cout << "Game Over! You ran out of points.\n";
             break;
         }
-                /*FIXME: Whats left is to add case 4 and 5 for GIVEUP and EXIT
-                Will also need to display an if statement in case the player runs out of points, i.e. GAMEOVER
-                Lastly, display the user's final score and end with a "Goodbye" message
-                */
 
+        // Ask if user wants to continue or restart
+        if (!exitOpt && score > 0) {
+            cout << "Would you like to continue or restart? (Y/N): ";
+            char restart;
+            cin >> restart;
+            restart = toupper(restart);
+            if (restart == 'N') {
+                exitOpt = true;
+            }
+        }
     }
 
-    return 0; 
+    // Final message
+    cout << "Thank you for playing! Your final score is: " << score << endl;
+    cout << "Goodbye!" << endl;
+
+    return 0;
 }
